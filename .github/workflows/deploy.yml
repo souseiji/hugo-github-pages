@@ -1,0 +1,56 @@
+name: Deploy Hugo site to GitHub Pages
+
+on:
+  # mainブランチへのプッシュ時に実行
+  push:
+    branches:
+      - main
+  
+  # 手動実行を許可
+  workflow_dispatch:
+
+# GitHub Pagesへのデプロイに必要な権限
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      # 1. リポジトリをチェックアウト（サブモジュールも含む）
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      
+      # 2. Hugoのセットアップ
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+      
+      # 3. Hugoサイトをビルド
+      - name: Build Hugo site
+        run: hugo --minify
+      
+      # 4. GitHub Pages用リポジトリにデプロイ
+      - name: Deploy to GitHub Pages repository
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          # GitHub Pagesリポジトリへのプッシュ用トークン
+          personal_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          # デプロイ先のリポジトリ
+          external_repository: souseiji/souseiji.github.io
+          # デプロイ先のブランチ
+          publish_branch: main
+          # デプロイするディレクトリ
+          publish_dir: ./public
+          # コミットメッセージ
+          commit_message: ${{ github.event.head_commit.message }}
+          # .nojekyllファイルを追加（GitHub PagesでJekyllを無効化）
+          enable_jekyll: false
+          # CNAMEファイルを保持（カスタムドメインを使用する場合）
+          cname: false
