@@ -35,3 +35,17 @@ Desktop.ini
 *.tmp
 *.bak
 *.log
+
+# Environment and secret files
+.env
+.env.*
+*.key
+*.pem
+*.p12
+secrets.yml
+secrets.yaml
+
+# Backup files
+*~
+*.backup
+*.old

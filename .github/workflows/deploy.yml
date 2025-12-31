@@ -10,8 +10,11 @@ on:
   workflow_dispatch:
 
 # GitHub Pagesへのデプロイに必要な権限
+# 外部リポジトリへのデプロイはPERSONAL_ACCESS_TOKENを使用
 permissions:
   contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build-and-deploy:
