@@ -66,7 +66,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     [params.header.title]
       logo = ""
       name = "河添ひろし公式サイト"
-      pre = "<i class='far fa-kiss-wink-heart fa-fw' aria-hidden='true'></i>"
+      pre = "<i class='fas fa-clipboard-check fa-fw' aria-hidden='true'></i>"
       post = ""
       typeit = false
 
